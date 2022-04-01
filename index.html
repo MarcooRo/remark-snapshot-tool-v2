@@ -1,0 +1,114 @@
+<html>
+
+<head>
+</head>
+<style>
+    body {
+        font-family: 'arial', sans-serif;
+        background-color: #16161D;
+    }
+    
+    h2 {
+        color: #f8f8f8;
+    }
+    
+    h1 {
+        color: #ffffff;
+        font-family: 'Raleway', sans-serif;
+        font-size: 62px;
+        font-weight: 800;
+        line-height: 72px;
+        margin: 0 0 48px;
+        text-transform: uppercase;
+    }
+    
+    .central {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        max-width: 750px
+    }
+    
+    form {
+        margin: 0 0 48px;
+    }
+    
+    .nftId {
+        width: 400px;
+        height: 35px;
+        padding: 0.25rem 0.5rem;
+    }
+    .blockLimit{
+        height: 35px;
+        padding: 0.25rem 0.5rem;
+    }
+    .snap {
+        width: 20%;
+        height: 35px;
+        cursor: pointer;
+    }
+    p, label {
+        color: #f8f8f8;
+        font-family: 'arial', sans-serif;
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 32px;
+    }
+    span{
+        color: #f8f8f8;
+        font-family: 'arial', sans-serif;
+        line-height: 22px;
+    }
+    
+    #waitDiv {
+        display: none;
+    }
+</style>
+
+<body>
+    <div class='central'>
+        <h1>Make your Snapshot</h1>
+        <form method="POST" class="nft-form">
+            <div>
+                <input type="radio" id="rmrk1" name="rmrkV" value="rmrk1" checked>
+                <label for="rmrk1">RMRK 1</label>
+            </div>
+            <div>
+                <input type="radio" id="rmrk2" name="rmrkV" value="rmrk2">
+                <label for="rmrk2">RMRK 2</label>
+            </div>
+            <br>
+            <span>Block Number if whant set limit time</span><br>
+            <input type='number' name='blockLimit' id='blockLimit' class='blockLimit' placeholder='123456'><br>
+            <br>
+            <span>Collection or key</span><br>
+            <input class="nftId" type="text" name="nftId" id="nftId" placeholder='ID-Collection or key'>
+            <button onclick="waitDiv()" class="snap" type="submit">Snap!</button>
+            <div id="waitDiv">
+                <p>
+                    <i>
+                    Processing....<br>
+                    It takes about ~30s for no block chack and ~60 with the block time chack<br>
+                    At the end the download will start automatically
+                    </i>
+                </p>
+            </div>
+        </form>
+        <p>
+            This tool uses the latest singular dump to get these data:<br>
+            <i>ID-NFT, address, first sale price, block, timestamp</i><br>
+            To use it add your key like the Collection ID:<br>
+            <i>e.g: 0a8ce195286c168f19-DONKEY or e0b9bdcc456a36497a-RMRKBNNRS</i><br>
+            If you can pass a specific Block, this will be used as a time limit, you will see all sales before to that date
+        </p>
+    </div>
+    <script>
+        function waitDiv() {
+            document.getElementById("waitDiv").style.display = "block";
+        }
+    </script>
+</body>
+
+</html>
