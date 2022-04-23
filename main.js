@@ -1,8 +1,8 @@
 const http = require('http');
 const fs = require('fs');
 var axios = require('axios');
-const url = require('url');
-const util = require('util');
+//const url = require('url');
+//const util = require('util');
 const alasql = require('alasql');
 const querystring = require('querystring');
 const { exec } = require('child_process');
@@ -41,11 +41,11 @@ function requestDb(req, body, res) {
 
     if(userRmrkV == 'rmrk2'){
         console.log('remark 2');
-        var rmrk2 = shell.exec(
-            str2,
-            { async: false },
-        );
-        var url = rmrk2.stdout;
+        // var rmrk2 = shell.exec(
+        //     str2,
+        //     { async: false },
+        // );
+        var url = 'https://rmrk-dumps.s3.eu-west-1.amazonaws.com/consolidated-from-latest.json'
     }
 
     axios.get(url)
@@ -54,11 +54,11 @@ function requestDb(req, body, res) {
         let jsonObj = JSON.parse(JSON.stringify(response.data));
         if (typeof userInput != undefined && userInput != "") {
             await saveFile(userInputBlock, userInput, jsonObj);
-            fs.readFile(`./excellDocuments/Remark-snapshot-wallet_${userInput}.xlsx`, function(err, content) {
+            fs.readFile(`Remark-snapshot-wallet_${userInput}.xlsx`, function(err, content) {
                 if (err) {
                     res.writeHead(400, { 'Content-type': 'text/html' })
                     console.log(err);
-                    res.end("No such file");
+                    res.end("Something wrong, no such file was generated");
                 } else {
                     res.setHeader('Content-disposition', 'attachment; filename=' + `Remark-snapshot-wallet_${userInput}.xlsx`);
                     res.end(content);
@@ -166,7 +166,7 @@ async function saveFile(userInputBlock, collectionId, jsonObj) {
             }// end if include 
         }// end for jsonObj
         var opts = [{ sheetid: 'NFT_ID', header: true }, { sheetid: 'OWNER_ID', header: false }, { sheetid: 'PRICE', header: false }, { sheetid: 'BLOCK', header: false }, { sheetid: 'DATA', header: false }];
-        var result = alasql(`SELECT * INTO XLSX("./excellDocuments/Remark-snapshot-wallet_${collectionId}.xlsx",?) FROM ?`, [opts, [sheet_1_data]]);    
+        var result = alasql(`SELECT * INTO XLSX("Remark-snapshot-wallet_${collectionId}.xlsx",?) FROM ?`, [opts, [sheet_1_data]]);    
     }// end if userInputBlock != ''
 
     if(userInputBlock == ''){
@@ -178,7 +178,7 @@ async function saveFile(userInputBlock, collectionId, jsonObj) {
             }
         }
         var opts = [{ sheetid: 'NFT_ID', header: true }, { sheetid: 'OWNER_ID', header: false }];
-        var result = alasql(`SELECT * INTO XLSX("./excellDocuments/Remark-snapshot-wallet_${collectionId}.xlsx",?) FROM ?`, [opts, [sheet_1_data]]);
+        var result = alasql(`SELECT * INTO XLSX("Remark-snapshot-wallet_${collectionId}.xlsx",?) FROM ?`, [opts, [sheet_1_data]]);
     }
-    exec("rm -rf ./excellDocuments/*.xlsx");
+    //exec("rm -rf *.xlsx");
 }
