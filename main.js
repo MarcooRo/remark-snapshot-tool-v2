@@ -41,11 +41,11 @@ function requestDb(req, body, res) {
 
     if(userRmrkV == 'rmrk2'){
         console.log('remark 2');
-        // var rmrk2 = shell.exec(
-        //     str2,
-        //     { async: false },
-        // );
-        var url = 'https://rmrk-dumps.s3.eu-west-1.amazonaws.com/consolidated-from-latest.json'
+        var rmrk2 = shell.exec(
+            str2,
+            { async: false },
+        );
+        var url = rmrk2;
     }
 
     axios.get(url)
